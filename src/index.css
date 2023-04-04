@@ -1,26 +1,28 @@
+@font-face {
+  font-family: tesla;
+  src: url("./assets/fonts/TESLA.ttf");
+}
+@font-face {
+  font-family: teslaLarge;
+  src: url("./assets/fonts/TESLA-large.ttf");
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
 }
 
 body {
@@ -29,45 +31,78 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  background: white;
+  scroll-behavior: smooth;
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.tesla {
+  font-family: tesla;
+}
+.teslaLarge {
+  font-family: teslaLarge;
+}
+
+.transitionDesign {
+  transition: 0.4s;
+}
+
+.model3 {
+  background: url("./assets/images/model3.jpg");
+  background-size: 225% 100%;
+}
+
+.modely {
+  background: url("./assets/images/modely.jpg");
+  background-size: 150% 100%;
+}
+
+.models {
+  background: url("./assets/images/models.jpg");
+  background-size: 185% 100%;
+}
+
+.modelx {
+  background: url("./assets/images/modelx.jpg");
+  background-size: 225% 100%;
+}
+
+.solarpanel {
+  background: url("./assets/images/solarpanel.jfif");
+  background-size: 225% 100%;
+}
+
+.solarroof {
+  background: url("./assets/images/solar-roof.jpg");
+  background-size: 225% 100%;
+}
+
+.accessories {
+  background: url("./assets/images/accessories.jpg");
+  background-size: 85% 35%;
+}
+
+.backgroundImage {
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+@media only screen and (min-width: 640px) {
+  .backgroundImage {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .accessories {
+    background-size: 35% 45%;
+  }
+}
+
+.headerGrid {
+  display: grid;
+  grid-template-columns: 20% 40% 15%;
+  gap: 12.5%;
+}
