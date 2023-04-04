@@ -1,1 +1,7 @@
-# tesla-website-clone
+## Tesla Website Home Page Clone (Frontend)
+
+This is my attemp on cloning the Home Page's frontend side of the tesla website.
+
+### Live Demo Link [Here](https://tristanjohngirao-tesla-website-clone.netlify.app/)
+
+Thank you and Enjoy!
