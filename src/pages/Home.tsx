@@ -57,7 +57,7 @@ const Home = () => {
     {
       paragraph1: "Model Y",
       paragraph2: (
-        <p className="text-black text-[18px] underline">
+        <p className="text-black text-[18px] underline cursor-pointer">
           Schedule a Demo Drive
         </p>
       ),
@@ -75,7 +75,7 @@ const Home = () => {
     {
       paragraph1: "Model S",
       paragraph2: (
-        <p className="text-black text-[18px] underline">
+        <p className="text-black text-[18px] underline cursor-pointer">
           Schedule a Demo Drive
         </p>
       ),
@@ -93,7 +93,7 @@ const Home = () => {
     {
       paragraph1: "Model X",
       paragraph2: (
-        <p className="text-black text-[18px] underline">
+        <p className="text-black text-[18px] underline cursor-pointer">
           Schedule a Demo Drive
         </p>
       ),
@@ -232,16 +232,10 @@ const Home = () => {
                 <a href="#">Powerwall</a>
               </div>
               <div className="relative h-full w-full flex flex-row items-center justify-evenly">
-                <button
-                  className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent"
-                  onClick={() => hiddenDivHandler()}
-                >
+                <button className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent">
                   Shop
                 </button>
-                <button
-                  className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent"
-                  onClick={() => hiddenDivHandler()}
-                >
+                <button className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent">
                   Account
                 </button>
                 <button
