@@ -1,153 +1,149 @@
-import React, { useEffect, useState, WheelEvent } from "react";
+import React, { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 
 //assets
-import arrow_gif from "../assets/images/moving-down-arrow.gif";
-import globe_icon from "../assets/images/globe-icon.jpg";
+import close_icon from "../assets/images/cross-icon.png";
 import left_arrow from "../assets/images/left-arrow.jpg";
-import cross_icon from "../assets/images/cross-icon.png";
+import globe_icon from "../assets/images/globe-icon.jpg";
+import down_arrow from "../assets/images/moving-down-arrow.gif";
+import modely from "../assets/images/modely.jpg";
 
-interface InfosType {
-  paragraph1?: string | undefined;
-  paragraph2?: JSX.IntrinsicElements["p"] | undefined;
-  button1?: JSX.IntrinsicElements["button"] | undefined;
-  button2?: JSX.IntrinsicElements["button"] | undefined;
-  image?: JSX.IntrinsicElements["img"] | undefined;
+interface SectionInfo {
+  name?: String;
+  title?: JSX.IntrinsicElements["p"] | JSX.IntrinsicElements["a"];
+  button1?: JSX.IntrinsicElements["button"];
+  button2?: JSX.IntrinsicElements["button"];
+  button3?: JSX.IntrinsicElements["img"];
 }
 
 const Home = () => {
-  const [hiddenWidth, setHiddenWidth] = useState("0");
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [sectionInfos, setSectionInfos] = useState<InfosType>({
-    paragraph1: "",
-    paragraph2: undefined,
-    button1: undefined,
-    button2: undefined,
-    image: undefined,
+  const isDesktopView = useMediaQuery({ query: "(min-width: 640px)" });
+  const [hiddenDiv, setHiddenDiv] = useState({
+    width: "0",
+    display: "none",
   });
   const [viewMore, setViewMore] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [sectionInfo, setSectionInfo] = useState<SectionInfo>({
+    name: "",
+    title: undefined,
+    button1: undefined,
+    button2: undefined,
+    button3: undefined,
+  });
 
-  const isDesktopView = useMediaQuery({ query: "(min-width: 640px)" });
+  const [showAnimate, setShowAnimate] = useState(false);
 
-  const sectionData = [
+  const sectionInfoArray = [
     {
-      paragraph1: "Model 3",
-      paragraph2: (
-        <p className="text-black text-[18px]">Leasing starting at $349/mo</p>
+      name: "Model Y",
+      title: (
+        <a href="#" className="text-black underline">
+          View Inventory
+        </a>
       ),
       button1: (
-        <button className="relative h-[40px] w-[425px] bg-black/75 text-white/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
-          View Inventory
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
+          Order Now
         </button>
       ),
       button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
-          Custom Order
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
+          Demo Drive
         </button>
       ),
-      image: (
+      button3: (
         <img
-          src={arrow_gif}
-          className="relative h-[20px] w-[25px] mb-[15px] cursor-pointer"
+          src={down_arrow}
           alt=""
-          onClick={() => setCurrentSectionIndex(1)}
+          className="relative h-[20px] w-[25px] mb-[10px] cursor-pointer"
+          onClick={() => setCurrentIndex(1)}
         />
       ),
     },
     {
-      paragraph1: "Model Y",
-      paragraph2: (
-        <p className="text-black text-[18px] underline cursor-pointer">
-          Schedule a Demo Drive
-        </p>
-      ),
+      name: "Model 3",
+      title: <p className="text-black">Leasing starting at $349/mo</p>,
       button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
-          View Inventory
-        </button>
-      ),
-      button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
-          Custom Order
-        </button>
-      ),
-    },
-    {
-      paragraph1: "Model S",
-      paragraph2: (
-        <p className="text-black text-[18px] underline cursor-pointer">
-          Schedule a Demo Drive
-        </p>
-      ),
-      button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
-          View Inventory
-        </button>
-      ),
-      button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
-          Custom Order
-        </button>
-      ),
-    },
-    {
-      paragraph1: "Model X",
-      paragraph2: (
-        <p className="text-black text-[18px] underline cursor-pointer">
-          Schedule a Demo Drive
-        </p>
-      ),
-      button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
-          View Inventory
-        </button>
-      ),
-      button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
-          Custom Order
-        </button>
-      ),
-    },
-    {
-      paragraph1: "Solar Panels",
-      paragraph2: (
-        <p className="text-black text-[18px]">
-          Lowest Cost Solar Panels in America
-        </p>
-      ),
-      button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
           Order Now
         </button>
       ),
       button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
+          Demo Drive
+        </button>
+      ),
+    },
+    {
+      name: "Model S",
+      title: (
+        <a href="#" className="text-black underline">
+          View Inventory
+        </a>
+      ),
+      button1: (
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
+          Order Now
+        </button>
+      ),
+      button2: (
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
+          Demo Drive
+        </button>
+      ),
+    },
+    {
+      name: "Model X",
+      title: (
+        <a href="#" className="text-black underline">
+          View Inventory
+        </a>
+      ),
+      button1: (
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
+          Order Now
+        </button>
+      ),
+      button2: (
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
+          Demo Drive
+        </button>
+      ),
+    },
+    {
+      name: "Solar Panels",
+      title: <p className="text-black">Lowest Cost Solar Panels in America</p>,
+      button1: (
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
+          Order Now
+        </button>
+      ),
+      button2: (
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
           Learn More
         </button>
       ),
     },
     {
-      paragraph1: "Solar Roof",
-      paragraph2: (
-        <p className="text-black text-[18px]">
-          Produce Clean Energy From Your Roof
-        </p>
-      ),
+      name: "Solar Roof",
+      title: <p className="text-black">Produce Clean Energy From Your Roof</p>,
       button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black/75 mb-[15px] font-medium sm:w-[275px] rounded-[5px]">
+        <button className="relative h-[40px] w-full bg-black/50 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
           Order Now
         </button>
       ),
       button2: (
-        <button className="relative h-[40px] w-[425px] bg-white/75 text-black/75 mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
+        <button className="relative h-[40px] w-full bg-white/50 rounded-[5px] text-black font-medium mb-[10px] sm:w-[45%]">
           Learn More
         </button>
       ),
     },
     {
-      paragraph1: "Accessories",
+      name: "Accessories",
       button1: (
-        <button className="relative h-[40px] w-[425px] text-white/75 bg-black mb-[50px] font-medium sm:w-[275px] rounded-[5px]">
+        <button className="relative h-[40px] w-full bg-black/75 rounded-[5px] font-medium mb-[10px] sm:w-[45%]">
           Shop Now
         </button>
       ),
@@ -155,30 +151,66 @@ const Home = () => {
   ];
 
   const hiddenDivHandler = () => {
-    if (hiddenWidth === "0") return setHiddenWidth("350px");
-    if (hiddenWidth === "350px") return setHiddenWidth("0");
+    if (hiddenDiv.width === "0") {
+      document.getElementById("hiddenDiv")?.classList.remove("fadeout");
+      document.getElementById("hiddenDiv")?.classList.add("fadein");
+      setHiddenDiv({
+        width: "350px",
+        display: "block",
+      });
+    } else {
+      document.getElementById("hiddenDiv")?.classList.remove("fadein");
+      document.getElementById("hiddenDiv")?.classList.add("fadeout");
+      setHiddenDiv({
+        width: "0",
+        display: "none",
+      });
+    }
+    setViewMore(false);
   };
 
-  const sectionScrollerHandler = (event: WheelEvent<HTMLDivElement>) => {
-    const sections = document.querySelectorAll("section");
+  const touchStartHandler = (event: any) => {
+    setStartY(event.touches[0].clientY);
+  };
 
+  const touchEndHandler = (event: any) => {
+    // console.log(event.changedTouches[0].clientY - startY);
+
+    const elements = document.querySelectorAll("section");
+    if (event.changedTouches[0].clientY - startY < 0) {
+      if (currentIndex < elements.length - 1) {
+        return setCurrentIndex(currentIndex + 1);
+      }
+      return setCurrentIndex(elements.length - 1);
+    }
+
+    if (event.changedTouches[0].clientY - startY > 0) {
+      if (currentIndex > 0) {
+        return setCurrentIndex(currentIndex - 1);
+      }
+      return setCurrentIndex(0);
+    }
+  };
+
+  const wheelEventhandler = (event: any) => {
+    const sections = document.querySelectorAll("section");
     if (event.deltaY < 0) {
-      if (currentSectionIndex > 0) {
-        setCurrentSectionIndex(currentSectionIndex - 1);
+      if (currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1);
       }
 
-      if (currentSectionIndex === 0) {
-        setCurrentSectionIndex(0);
+      if (currentIndex === 0) {
+        setCurrentIndex(0);
       }
     }
 
     if (event.deltaY > 0) {
-      if (currentSectionIndex < sections.length - 1) {
-        setCurrentSectionIndex(currentSectionIndex + 1);
+      if (currentIndex < sections.length - 1) {
+        setCurrentIndex(currentIndex + 1);
       }
 
-      if (currentSectionIndex === sections.length - 1) {
-        setCurrentSectionIndex(sections.length - 1);
+      if (currentIndex === sections.length - 1) {
+        setCurrentIndex(sections.length - 1);
       }
     }
   };
@@ -188,327 +220,298 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-    sections[currentSectionIndex].scrollIntoView(true);
-
-    console.log(sections.length);
-    setSectionInfos({
-      paragraph1: sectionData[currentSectionIndex].paragraph1,
-      paragraph2: sectionData[currentSectionIndex].paragraph2,
-      button1: sectionData[currentSectionIndex].button1,
-      button2: sectionData[currentSectionIndex].button2,
-      image: sectionData[currentSectionIndex].image,
+    const elements = document.querySelectorAll("section");
+    elements[currentIndex].scrollIntoView(true);
+    setSectionInfo({
+      name: sectionInfoArray[currentIndex].name,
+      title: sectionInfoArray[currentIndex].title,
+      button1: sectionInfoArray[currentIndex].button1,
+      button2: sectionInfoArray[currentIndex].button2,
+      button3: sectionInfoArray[currentIndex].button3,
     });
-  }, [currentSectionIndex]);
+    setShowAnimate(true);
+    setTimeout(() => setShowAnimate(false), 1000);
+  }, [currentIndex]);
 
   return (
-    <div className="absolute top-0 left-0 h-screen w-screen flex flex-col">
-      <header className="fixed top-0 left-0 h-[15%] w-full flex flex-col z-[2]">
-        <div className="relative h-[50%] w-full flex items-center justify-center  text-black/75 text-[12px] bg-white px-[25px]">
-          <p className="p-0 m-0 text-[12px] tracking-[0.35px] sm:text-[14px]">
-            Update - $7,500 tax credit is anticipated to be reduced for Model 3
+    <div className="absolute top-0 left-0 h-full w-full">
+      {/* hidden div */}
+      <div
+        className="fixed top-0 left-0 h-screen w-screen bg-black/25 z-[2] transitionDesign"
+        style={{ display: hiddenDiv.display }}
+      ></div>
+      <div
+        className="fixed top-0 right-0 h-full bg-white z-[3] transitionDesign text-black/75 font-medium"
+        id="hiddenDiv"
+        style={{ width: hiddenDiv.width }}
+      >
+        <div className="relative h-full w-full flex flex-col items-start justify-start">
+          <div className="relative h-[10vh] w-full flex items-center justify-end">
+            {viewMore === true && (
+              <button
+                className="absolute left-[5%]"
+                onClick={() => setViewMore(false)}
+              >
+                {"<"} Back
+              </button>
+            )}
+            <img
+              src={close_icon}
+              alt=""
+              className="relative h-[15px] w-[15px] mr-[10%] cursor-pointer"
+              onClick={() => hiddenDivHandler()}
+            />
+          </div>
+          <div className="relative h-full w-full overflow-y-auto">
+            <div className="relative h-[180vh] w-full flex flex-col items-start justify-start sm:h-full">
+              {isDesktopView ? (
+                <>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Existing Inventory</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Used Inventory</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Trade-In</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Demo Drive</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Insurance</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Cybertruck</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Raodster</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Semi</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Charging</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Commercial Energy</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Utilitis</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Find Us</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Support</p>
+                  </div>
+                  <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                    <p className="p-0 m-0">Investor Relations</p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {viewMore === false ? (
+                    <>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Model S</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Model 3</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Model X</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Model Y</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Solar Roof</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Solar Panels</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Powerwall</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Existing Inventory</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Used Inventory</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Trade-In</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Demo Drive</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Insurance</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Commercial Energy</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Utilities</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Charging</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Find Us</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Support</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Investor Relations</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Shop</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Account</p>
+                      </div>
+                      <div
+                        className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-between"
+                        onClick={() => setViewMore(true)}
+                      >
+                        <p className="p-0 m-0">More</p>
+                        <img
+                          src={left_arrow}
+                          alt=""
+                          className="relative h-[15px] w-[20px] mr-[10%]"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Cybertruck</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Roadster</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">Semi</p>
+                      </div>
+                      <div className="relative h-[50px] w-[90%] mx-[5%] flex items-center justify-start">
+                        <p className="p-0 m-0">News</p>
+                      </div>
+                    </>
+                  )}
+                </>
+              )}
+              <div className="relative h-[65px] w-[90%] mx-[5%] flex flex-row">
+                <div className="relative h-full w-[10%] flex items-start justify-start">
+                  <img
+                    src={globe_icon}
+                    alt=""
+                    className="relative h-[25px] w-[25px] mt-[25%] sm:mt-[15%]"
+                  />
+                </div>
+                <div className="relative h-full w-[85%] flex flex-col items-start justify-evenly">
+                  <p className="font-bold">United State</p>
+                  <p className="text-[14px]">English</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <header className="fixed h-[15vh] w-full z-[1] sm:h-[10vh]">
+        <div className="relative h-1/2 w-full bg-white flex flex-row items-center justify-center">
+          <p className="mx-[5%] text-black/75 text-[12px] sm:text-[16px]">
+            Update — $7,500 tax credit is anticipated to be reduced for Model 3
             on April 18. Take delivery now. &nbsp;
-            <a href="#" className=" text-black/75 font-normal underline">
+            <a href="#" className="underline">
               Learn More
             </a>
           </p>
         </div>
-        <div className="relative h-[50%] w-full headerGrid px-[25px] font-medium">
-          <a
-            href="/"
-            className="teslaLarge text-[16px] text-black tracking-[10px] font-bold self-center justify-self-start"
-          >
+        <div className="relative h-1/2 w-[95%] mx-[2.5%] bg-transparent flex flex-row items-center justify-between px-[25px] text-black/75 font-medium">
+          <a href="/" className="teslaLarge tracking-[10px] text-[20px]">
             TESLA
           </a>
+          {isDesktopView && (
+            <div className="relative h-full w-[40%] flex flex-row items-center justify-between">
+              <a href="#">Model S</a>
+              <a href="#">Model 3</a>
+              <a href="#">Model X</a>
+              <a href="#">Model Y</a>
+              <a href="#">Solar Roof</a>
+              <a href="#">Solar Panels</a>
+              <a href="#">Powerwall</a>
+            </div>
+          )}
           {isDesktopView ? (
             <>
-              <div className="relative h-full w-full flex flex-row items-center justify-evenly text-black">
-                <a href="#">Model S</a>
-                <a href="#">Model 3</a>
-                <a href="#">Model X</a>
-                <a href="#">Model Y</a>
-                <a href="#">Solar Roof</a>
-                <a href="#">Solar Panels</a>
-                <a href="#">Powerwall</a>
-              </div>
-              <div className="relative h-full w-full flex flex-row items-center justify-evenly">
-                <button className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent">
-                  Shop
-                </button>
-                <button className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent">
-                  Account
-                </button>
-                <button
-                  className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent"
-                  onClick={() => hiddenDivHandler()}
-                >
-                  Menu
-                </button>
+              <div className="relative h-full w-[10%] flex flex-row items-center justify-between">
+                <button>Shop</button>
+                <button>Account</button>
+                <button onClick={() => hiddenDivHandler()}>Menu</button>
               </div>
             </>
           ) : (
             <>
-              {/* this div is just to fill the 40% grid  */}
-              <div></div>
-              <button
-                className="relative h-[35px] w-[65px] bg-[#0000000d] text-black sm:bg-transparent self-center justify-self-center"
-                onClick={() => hiddenDivHandler()}
-              >
-                Menu
-              </button>
+              <button onClick={() => hiddenDivHandler()}>Menu</button>
             </>
           )}
         </div>
       </header>
 
-      {/* hidden div */}
-      <div
-        className="absolute top-0 right-0 h-full transitionDesign bg-white z-[3] overflow-y-auto"
-        style={{ width: hiddenWidth }}
-      >
-        <div className="relative h-[100px] w-full flex items-center justify-end">
-          {viewMore === true && (
-            <button
-              className="absolute left-[15px] h-[50px] w-[50px] outline-none border-none text-black/50"
-              onClick={() => setViewMore(false)}
-            >
-              {"<"} Back
-            </button>
-          )}
-          <img
-            src={cross_icon}
-            alt=""
-            className="relative h-[15px] w-[15px] mr-[10%] cursor-pointer"
-            onClick={() => hiddenDivHandler()}
-          />
-        </div>
-        <div className="relative h-[1300px] w-full flex flex-col items-center justify-start">
-          {viewMore === false ? (
-            <>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Model S
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Model 3
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Model X
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Model Y
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Solar Roof
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Solar Panels
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Powerwall
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Existing Inventory
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Used Inventory
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Trade-In
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Demo Drive
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Insurance
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Commercial Energy
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Utilities
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Charging
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Find Us
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Support
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Investor Relations
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Shop
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Account
-                </p>
-              </div>
-              <div
-                className="relative h-[40px] w-[90%] flex items-center justify-between cursor-pointer"
-                onClick={() => setViewMore(true)}
-              >
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  More
-                </p>
-                <img
-                  src={left_arrow}
-                  alt=""
-                  className="relative h-[15px] w-[25px] mr-[15%]"
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Cybertruck
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Roadster
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  Semi
-                </p>
-              </div>
-              <div className="relative h-[40px] w-[90%] flex items-center justify-start">
-                <p className="text-black/75 font-medium text-[14px] ml-[10px]">
-                  News
-                </p>
-              </div>
-            </>
-          )}
+      <main className="relative h-full w-full overflow-hidden sm:scroll-smooth">
+        <section className="relative h-full w-full modely-bg"></section>
+        <section className="relative h-full w-full model3-bg"></section>
+        <section className="relative h-full w-full models-bg"></section>
+        <section className="relative h-full w-full modelx-bg"></section>
+        <section className="relative h-full w-full solarpanel-bg"></section>
+        <section className="relative h-full w-full solarroof-bg"></section>
+        <section className="relative h-full w-full bg-white accessories-bg"></section>
+      </main>
 
-          <div className="relative h-[50px] w-[90%] flex flex-row items-start justify-start mt-[20px]">
-            <div className="relative h-full w-[10%] ml-[10px]">
-              <img
-                src={globe_icon}
-                alt=""
-                className="relative h-[25px] w-[25px]"
-              />
+      <div
+        className={`${
+          showAnimate === true ? "sectionFade" : ""
+        } fixed top-[25vh] h-[70vh] w-screen flex flex-col items-center justify-between sm:top-[20vh] sm:h-[75vh]`}
+        onWheel={wheelEventhandler}
+        onTouchStart={touchStartHandler}
+        onTouchEnd={touchEndHandler}
+      >
+        <div>
+          <>
+            <p className="text-[42px] text-black font-medium">
+              {sectionInfo?.name}
+            </p>
+            {sectionInfo?.title}
+          </>
+        </div>
+        <div className="relative h-[150px] w-[90%] flex flex-col items-center justify-end sm:w-[30%]">
+          <>
+            <div className="relative h-[75%] w-full flex flex-col justify-end sm:h-[50%] sm:flex-row sm:items-center sm:justify-evenly">
+              <>
+                {sectionInfo.button1}
+                {sectionInfo.button2}
+              </>
             </div>
-            <div className="relative h-full w-[75%] flex flex-col items-start justify-evenly">
-              <p className="text-black font-medium">United State</p>
-              <p className="text-black text-[14px]">English</p>
-            </div>
-          </div>
-          {!isDesktopView && (
-            <div className="relative top-[100px] h-[150px] w-full flex flex-col items-center justify-between text-black/75">
-              <a href="#">Tesla &copy; 2023</a>
-              <a href="#">Privacy & Legal</a>
-              <a href="#">Vehicle Recalls</a>
-              <a href="#">Careers</a>
-              <a href="#">News</a>
-            </div>
-          )}
+            {sectionInfo.button3}
+          </>
         </div>
       </div>
-      <main className="relative h-full w-full overflow-hidden scroll-smooth">
-        <section className="relative h-full w-full p-0 m-0 model3 backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 modely backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 models backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 modelx backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 solarpanel backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 solarroof backgroundImage flex items-center justify-center"></section>
-        <section className="relative h-full w-full p-0 m-0 accessories backgroundImage flex items-center justify-center"></section>
-        <div
-          className="fixed top-[20%] h-[75%] w-full z-[2] flex flex-col items-center justify-between"
-          onWheel={sectionScrollerHandler}
-        >
-          <div>
-            <>
-              <p className="text-[42px] text-black font-medium">
-                {sectionInfos.paragraph1}
-              </p>
-              {sectionInfos.paragraph2}
-            </>
-          </div>
-          <div
-            className="flex flex-col items-center justify-start sm:w-[40%]"
-            id="cover-div"
-          >
-            {isDesktopView ? (
-              <>
-                <div className="relative h-[85%] w-full flex flex-row items-start justify-evenly">
-                  <>
-                    {sectionInfos.button1}
-                    {sectionInfos.button2}
-                  </>
-                </div>
-                {sectionInfos.image}
-              </>
-            ) : (
-              <>
-                {sectionInfos.button1}
-                {sectionInfos.button2}
-                {sectionInfos.image}
-              </>
-            )}
-          </div>
+
+      <footer className="fixed bottom-0 h-[5vh] w-full bg-white flex items-center justify-center z-[1]">
+        <div className="relative h-full w-[95%] flex flex-row items-center justify-between text-[10px] text-black/75 sm:w-[30%] sm:text-[12px]">
+          <a href="#">Tesla © 2023</a>
+          <a href="#">Privacy & Legal</a>
+          <a href="#">Vehicle Recalls</a>
+          <a href="#">Contact</a>
+          <a href="#">Careers</a>
+          <a href="#">News</a>
+          <a href="#">Engage</a>
+          <a href="#">Locations</a>
         </div>
-      </main>
-      {isDesktopView && currentSectionIndex === 6 && (
-        <div className="fixed bottom-0 h-[5%] w-full bg-white z-[1] flex items-center justify-center">
-          <div className="relative h-full w-[40%] flex flex-row items-center justify-between text-black text-[13px] font-medium">
-            <a href="#">Tesla &copy; 2023</a>
-            <a href="#">Privacy & Legal</a>
-            <a href="#">Vehicle Recalls</a>
-            <a href="#">Contact</a>
-            <a href="#">Careers</a>
-            <a href="#">News</a>
-            <a href="#">Engage</a>
-            <a href="#">Locations</a>
-          </div>
-        </div>
-      )}
-      {!isDesktopView && (
-        <div className="fixed bottom-0 h-[5vh] w-full bg-white"></div>
-      )}
+      </footer>
     </div>
   );
 };

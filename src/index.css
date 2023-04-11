@@ -7,9 +7,9 @@
   src: url("./assets/fonts/TESLA-large.ttf");
 }
 
-html,
-body {
-  scroll-behavior: smooth;
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
 }
 
 :root {
@@ -47,62 +47,141 @@ body {
 }
 
 .transitionDesign {
-  transition: 0.4s;
+  transition: 0.5s;
 }
 
-.model3 {
-  background: url("./assets/images/model3.jpg");
-  background-size: 225% 100%;
+.fadein {
+  animation-name: fade-in;
+  animation-duration: 0.5s;
 }
 
-.modely {
-  background: url("./assets/images/modely.jpg");
-  background-size: 150% 100%;
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.models {
-  background: url("./assets/images/models.jpg");
-  background-size: 185% 100%;
+.fadeout {
+  animation-name: fade-out;
+  animation-duration: 0.5s;
 }
 
-.modelx {
-  background: url("./assets/images/modelx.jpg");
-  background-size: 225% 100%;
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
-.solarpanel {
-  background: url("./assets/images/solarpanel.jfif");
-  background-size: 225% 100%;
+.sectionFade {
+  animation-name: section-fade;
+  animation-duration: 1s;
 }
 
-.solarroof {
-  background: url("./assets/images/solar-roof.jpg");
-  background-size: 225% 100%;
+@keyframes section-fade {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
-.accessories {
-  background: url("./assets/images/accessories.jpg");
-  background-size: 85% 35%;
+.modely-bg {
+  background-image: url("./assets/images/modely.jpg");
+  background-position: center;
+  background-size: 150% 90%;
+  background-repeat: no-repeat;
 }
-
-.backgroundImage {
-  background-position: center center;
+.model3-bg {
+  background-image: url("./assets/images/model3.jpg");
+  background-position: center;
+  background-size: 150% 90%;
+  background-repeat: no-repeat;
+}
+.models-bg {
+  background-image: url("./assets/images/models.jpg");
+  background-position: center;
+  background-size: 125% 90%;
+  background-repeat: no-repeat;
+}
+.modelx-bg {
+  background-image: url("./assets/images/modelx.jpg");
+  background-position: center;
+  background-size: 125% 90%;
+  background-repeat: no-repeat;
+}
+.solarpanel-bg {
+  background-image: url("./assets/images/solar-panels.jpg");
+  background-position: center;
+  background-size: 150% 90%;
+  background-repeat: no-repeat;
+}
+.solarroof-bg {
+  background-image: url("./assets/images/solar-roof.jpg");
+  background-position: center;
+  background-size: 150% 90%;
+  background-repeat: no-repeat;
+}
+.accessories-bg {
+  background-image: url("./assets/images/accessories.jpg");
+  background-position: center;
+  background-size: 35% 35%;
   background-repeat: no-repeat;
 }
 
-@media only screen and (min-width: 640px) {
-  .backgroundImage {
+@media screen and (min-width: 640px) {
+  .modely-bg {
+    background-image: url("./assets/images/modely.jpg");
     background-position: center;
-    background-size: cover;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
   }
-  .accessories {
-    background-size: 35% 45%;
+  .model3-bg {
+    background-image: url("./assets/images/model3.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
   }
-}
-
-.headerGrid {
-  display: grid;
-  grid-template-columns: 20% 40% 15%;
-  gap: 12.5%;
+  .models-bg {
+    background-image: url("./assets/images/models.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .modelx-bg {
+    background-image: url("./assets/images/modelx.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .solarpanel-bg {
+    background-image: url("./assets/images/solar-panels.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .solarroof-bg {
+    background-image: url("./assets/images/solar-roof.jpg");
+    background-position: center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+  }
+  .accessories-bg {
+    background-image: url("./assets/images/accessories.jpg");
+    background-position: center;
+    background-size: 20% 45%;
+    background-repeat: no-repeat;
+  }
 }
