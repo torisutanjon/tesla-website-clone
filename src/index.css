@@ -135,9 +135,9 @@ body {
   background-repeat: no-repeat;
 }
 .accessories-bg {
-  background-image: url("./assets/images/accessories.jpg");
+  background-image: url("./assets/images/accessories.png");
   background-position: center;
-  background-size: 35% 35%;
+  background-size: 75% 40%;
   background-repeat: no-repeat;
 }
 
@@ -179,9 +179,9 @@ body {
     background-repeat: no-repeat;
   }
   .accessories-bg {
-    background-image: url("./assets/images/accessories.jpg");
+    background-image: url("./assets/images/accessories.png");
     background-position: center;
-    background-size: 20% 45%;
+    background-size: 30% 45%;
     background-repeat: no-repeat;
   }
 }

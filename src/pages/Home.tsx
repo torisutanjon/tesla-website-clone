@@ -461,14 +461,14 @@ const Home = () => {
         </div>
       </header>
 
-      <main className="relative h-full w-full overflow-hidden sm:scroll-smooth">
+      <main className="relative h-screen w-full overflow-hidden sm:scroll-smooth">
         <section className="relative h-full w-full modely-bg"></section>
         <section className="relative h-full w-full model3-bg"></section>
         <section className="relative h-full w-full models-bg"></section>
         <section className="relative h-full w-full modelx-bg"></section>
         <section className="relative h-full w-full solarpanel-bg"></section>
         <section className="relative h-full w-full solarroof-bg"></section>
-        <section className="relative h-full w-full bg-white accessories-bg"></section>
+        <section className="relative h-full w-full bg-white-500 accessories-bg"></section>
       </main>
 
       <div
