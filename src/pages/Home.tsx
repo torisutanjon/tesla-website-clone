@@ -474,7 +474,7 @@ const Home = () => {
       <div
         className={`${
           showAnimate === true ? "sectionFade" : ""
-        } fixed top-[25vh] h-[70vh] w-screen flex flex-col items-center justify-between sm:top-[20vh] sm:h-[75vh]`}
+        } fixed top-[20%] h-[75%] w-screen flex flex-col items-center justify-between sm:top-[20vh] sm:h-[75vh]`}
         onWheel={wheelEventhandler}
         onTouchStart={touchStartHandler}
         onTouchEnd={touchEndHandler}
@@ -501,7 +501,7 @@ const Home = () => {
       </div>
 
       <footer className="fixed bottom-0 h-[5vh] w-full bg-white flex items-center justify-center z-[1]">
-        <div className="relative h-full w-[95%] flex flex-row items-center justify-between text-[10px] text-black/75 sm:w-[30%] sm:text-[12px]">
+        <div className="relative h-full w-[95%] flex flex-row items-center justify-between text-[8px] text-black/75 sm:w-[30%] sm:text-[12px]">
           <a href="#">Tesla © 2023</a>
           <a href="#">Privacy & Legal</a>
           <a href="#">Vehicle Recalls</a>
