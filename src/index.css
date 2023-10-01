@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "tesla";
+  src: url("./fonts/TESLA.ttf");
+}
+
+.model3_bg {
+  background: url("./assets/model3_bg.jpg");
+}
+
+.modely_bg {
+  background: url("./assets/modely_bg.jpg");
+}
+.models_bg {
+  background: url("./assets/models_bg.jpg");
+}
+.modelx_bg {
+  background: url("./assets/modelx_bg.jpg");
+}
+.panel_bg {
+  background: url("./assets/panel_bg.jpg");
+}
+.roof_bg {
+  background: url("./assets/roof_bg.jpg");
+}
+.powerwall {
+  background: url("./assets/powerwall_bg.jpg");
+}
+.accessories_bg {
+  background: url("./assets/accessories_bg.jpg");
+}
+
+@media only screen and (max-width: 640px) {
+  .calc-height {
+    height: calc(100% - 6rem);
+  }
+  .model3_bg {
+    background: url("./assets/model3_mobile_bg.jpg");
+  }
+
+  .modely_bg {
+    background: url("./assets/modely_mobile_bg.jpg");
+  }
+  .models_bg {
+    background: url("./assets/models_mobile_bg.jpg");
+  }
+  .modelx_bg {
+    background: url("./assets/modelx_mobile_bg.jpg");
+  }
+  .panel_bg {
+    background: url("./assets/panel_mobile_bg.jpg");
+  }
+  .roof_bg {
+    background: url("./assets/roof_mobile_bg.jpg");
+  }
+  .powerwall {
+    background: url("./assets/powerwall_mobile_bg.jpg");
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .calc-height {
+    height: calc(100% - 4.5rem);
+  }
+  .accessories_bg {
+    background: url("./assets/accessories_mobile_bg.jpg");
+  }
+}
+
+.model3_bg,
+.modely_bg,
+.models_bg,
+.modelx_bg,
+.panel_bg,
+.roof_bg,
+.powerwall,
+.accessories_bg {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.calc-height {
+  height: calc(100% - 3.5rem);
+}
+
+.gradient-header {
+  background: radial-gradient(
+    56.23% 164.69% at 22.01% -24.48%,
+    #546aa6 0%,
+    #141414 100%
+  );
+}
