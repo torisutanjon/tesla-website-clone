@@ -26,7 +26,7 @@ const Accessories = () => {
     <div className="relative h-full w-full flex items-center justify-center accessories_bg snap-end">
       <div className="relative h-10 w-10" ref={observeRef}></div>
       <div className="absolute bottom-6 hidden w-1/2  flex-row items-center justify-center text-[0.8rem] text-white/75 font-bold lg:flex">
-        <p className="mx-2">Tesla &copy; 2023</p>
+        <p className="mx-2">Tristan John P. Girao &copy; 2023</p>
         <a href="#" className="mx-2">
           Privacy & Legal
         </a>
